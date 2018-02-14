@@ -3,8 +3,8 @@ const fetch = require('node-fetch');
 const url = require('url');
 const app = express();
 const path = require('path');
-const appUrl = 'http://localhost:8000/';
-const renderUrl = 'http://35.229.245.229:8080/';
+const appUrl = '35.229.167.26:8000'
+const renderUrl = 'http://35.229.167.26:8080/render';
 app.use('/',express.static(__dirname+'/../dist'));
 
 function generateUrl(request) {
@@ -15,6 +15,7 @@ function generateUrl(request) {
     });
 }
 function detectBot(userAgent) {
+    console.log("detect bot function called");
     // List of bots to target, add more if you'd like
     const bots = [
       // crawler bots
@@ -41,6 +42,8 @@ function detectBot(userAgent) {
       if (agent.indexOf(bot) > -1) {
         console.log('bot detected', bot, agent)
         return true
+      } else {
+        console.log("sorry !bot not detected");
       }
     }
     console.log('no bots found')
@@ -60,7 +63,9 @@ function detectBot(userAgent) {
           // https://github.com/justinribeiro/pwa-firebase-functions-botrender
           res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
           res.set('Vary', 'User-Agent');
-          
+          console.log(`url-format-${renderUrl}/${botUrl}`);
+          console.log(`bot-url-${botUrl}`);
+          console.log("body->", body.toString());
           res.send(body.toString())
         
       });
@@ -78,6 +83,6 @@ function detectBot(userAgent) {
   });
 
   app.listen(8000, function () {
-      console.log('Vola! The app is listening on port 8000!')
+      console.log('Vola!! The app is listening on port 8000!')
   })
   module.exports = app; 

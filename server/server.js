@@ -14,6 +14,7 @@ function generateUrl(request) {
       pathname: request.originalUrl
     });
 }
+
 function detectBot(userAgent) {
     console.log("detect bot function called");
     // List of bots to target, add more if you'd like
